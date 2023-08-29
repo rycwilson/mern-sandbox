@@ -1,10 +1,13 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import 'express-async-errors';
 
 import connectDb from './config/db.js';
 
 // middleware
 import authRouter from './routes/auth.js';
+import authenticatedUser from './middleware/auth.js';
+import widgetsRouter from './routes/widgets.js';
 import notFound from './middleware/not-found.js';
 import errorHandler from './middleware/error-handler.js';
 
@@ -15,8 +18,9 @@ dotenv.config();
 
 app
   .get('/', (req, res) => res.send('node api'))   // just a sanity check
-  .use(express.json())
+  .use(express.json())    // for accessing post data in the body
   .use('/api/v1/auth', authRouter)
+  .use('/api/v1/widgets', authenticatedUser, widgetsRouter)
   .use(notFound)
   .use(errorHandler);
 
