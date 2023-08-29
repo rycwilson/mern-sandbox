@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import connectDb from './config/db.js';
 
 // middleware
+import authRouter from './routes/auth.js';
 import notFound from './middleware/not-found.js';
 import errorHandler from './middleware/error-handler.js';
 
@@ -15,6 +16,7 @@ dotenv.config();
 app
   .get('/', (req, res) => res.send('node api'))   // just a sanity check
   .use(express.json())
+  .use('/api/v1/auth', authRouter)
   .use(notFound)
   .use(errorHandler);
 
