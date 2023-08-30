@@ -2,6 +2,7 @@
   "name": "node-api",
   "version": "1.0.0",
   "description": "",
+  "_comment": ".js files will be treated as .mjs (ES6 module) vs .cjs (CommonJS i.e. Node default module system)",
   "type": "module",
   "main": "server.js",
   "scripts": {
@@ -12,12 +13,16 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
+    "express-rate-limit": "^6.9.0",
+    "helmet": "^7.0.0",
     "http-status-codes": "^2.2.0",
     "jsonwebtoken": "^9.0.1",
-    "mongoose": "^7.4.5"
+    "mongoose": "^7.4.5",
+    "xss-clean": "^0.1.4"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
