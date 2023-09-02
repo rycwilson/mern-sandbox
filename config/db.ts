@@ -1,12 +1,5 @@
-import { connect, ConnectOptions } from 'mongoose'
+import { connect } from 'mongoose';
 
-const connectDb = async (dbUrl: string) => {
-  connect(dbUrl, {
-    useNewUrlParser: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-    useUnifiedTopology: true
-  } as ConnectOptions)
-}
+const connectDb = async (dbUrl: string) => connect(dbUrl);
 
-export default connectDb
+export default connectDb;
