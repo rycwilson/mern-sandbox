@@ -6,7 +6,9 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js -e html,js,css",
+    "build": "npx tsc",
+    "start": "node builds/server.js",
+    "dev": "concurrently \"npx tsc --watch\" \"node server.js -e html,js,css\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ryan Wilson",
