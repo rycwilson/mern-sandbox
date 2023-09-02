@@ -1,8 +1,9 @@
 import express, { Express, Request, Response } from 'express';
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 import 'express-async-errors';
 
-// database
+// configuration
+import config from './config/config.js';
 import connectDb from './config/db.js';
 
 // security packages
@@ -22,7 +23,7 @@ import errorHandler from './middleware/error-handler.js';
 const appName = 'node-api';
 const app: Express = express();
 
-dotenv.config();
+// dotenv.config();
 
 app
   .get('/', (req: Request, res: Response) => res.send('node api'))   // just a sanity check
@@ -31,8 +32,8 @@ app
     rateLimiter({
       windowMs: 15 * 60 * 1000,   // 15 mins
       max: 100,   // limit each IP to 100 requests per windowMs
-    }
-  ))
+    })
+  )
   .use(express.json())    // for accessing post data in the body
   .use(helmet())
   .use(cors())
@@ -41,11 +42,11 @@ app
   .use(notFound)
   .use(errorHandler);
 
-connectDb(`${process.env.MONGO_URI}/${appName}`)
+connectDb(`${config.MONGO_URI}/${appName}`)
   .then(start)
   .catch(err => console.log(`Error connecting to database: ${err.message}`));
 
 function start() {
-  const port = process.env.PORT || 8000;
+  const port = config.PORT || 8000;
   app.listen(port, () => console.log(`${appName} server is listening on port ${port}...`))
 }

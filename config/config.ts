@@ -10,17 +10,17 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 // Note these variables can possibly be undefined
 // as someone could skip these varibales or not setup a .env file at all
 interface ENV {
-  PORT: number | undefined;
-  MONGO_URI: string | undefined;
-  JWT_SECRET: string | undefined;
-  JWT_EXPIRES_IN: string | undefined;
+  PORT: number | undefined,
+  MONGO_URI: string | undefined,
+  JWT_SECRET: string | undefined,
+  JWT_EXPIRES_IN: string | undefined,
 }
 
 interface Config {
-  PORT: number;
-  MONGO_URI: string;
-  JWT_SECRET: string;
-  JWT_EXPIRES_IN: string;
+  PORT: number,
+  MONGO_URI: string,
+  JWT_SECRET: string,
+  JWT_EXPIRES_IN: string,
 }
 
 // Loading process.env as ENV interface
