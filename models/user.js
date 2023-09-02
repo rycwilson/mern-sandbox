@@ -1,11 +1,23 @@
-import mongoose from 'mongoose';
+import { Schema, model } from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
+interface IUser {
+  firstName: string,
+  lastName?: string,
+  email: string,
+  password: string
+}
+
 const userAttributes = {
-  name: {
+  firstName: {
     type: String,
     required: [true, 'Name is required'],
+    maxlength: 50,
+    trim: true
+  },
+  lastName: {
+    type: String,
     maxlength: 50,
     trim: true
   },
@@ -23,10 +35,15 @@ const userAttributes = {
     required: [true, 'Password is required'],
     minlength: 6,
     trim: true
-  }
+  },
+  // company: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "Company",
+  //   required: true
+  // }
 };
 const options = { timestamps: true };
-const userSchema = new mongoose.Schema(userAttributes, options);
+const userSchema = new Schema<IUser>(userAttributes, options);
 
 userSchema.pre('save', async function () {
   const salt = await bcrypt.genSalt(10);
@@ -46,4 +63,4 @@ userSchema.methods.comparePassword = async function (candidatePass) {
   return isMatch;
 }
 
-export default mongoose.model('User', userSchema);
+export default model<IUser>('User', userSchema);
