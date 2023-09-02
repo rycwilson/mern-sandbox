@@ -8,7 +8,6 @@ import connectDb from './config/db.js';
 // security packages
 import helmet from 'helmet';
 import cors from 'cors';
-import xss from 'xss-clean';
 import rateLimiter from 'express-rate-limit';
 
 // routes
@@ -37,7 +36,6 @@ app
   .use(express.json())    // for accessing post data in the body
   .use(helmet())
   .use(cors())
-  .use(xss())
   .use('/api/v1/auth', authRouter)
   .use('/api/v1/widgets', authenticatedUser, widgetsRouter)
   .use(notFound)
