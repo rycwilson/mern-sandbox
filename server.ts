@@ -1,8 +1,9 @@
-import express from 'express';
+import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import 'express-async-errors';
 
-import connectDb from './config/db.js';
+// database
+import connectDb from './config/db';
 
 // security packages
 import helmet from 'helmet';
@@ -10,20 +11,22 @@ import cors from 'cors';
 import xss from 'xss-clean';
 import rateLimiter from 'express-rate-limit';
 
-// middleware
+// routes
 import authRouter from './routes/auth.js';
-import authenticatedUser from './middleware/auth.js';
 import widgetsRouter from './routes/widgets.js';
+
+// middleware
+import authenticatedUser from './middleware/auth.js';
 import notFound from './middleware/not-found.js';
 import errorHandler from './middleware/error-handler.js';
 
 const appName = 'node-api';
-const app = express();
+const app: Express = express();
 
 dotenv.config();
 
 app
-  .get('/', (req, res) => res.send('node api'))   // just a sanity check
+  .get('/', (req: Request, res: Response) => res.send('node api'))   // just a sanity check
   .set('trust proxy', 1)  // (for heroku deploy) https://www.npmjs.com/package/express-rate-limit#user-content-troubleshooting-proxy-issues
   .use(
     rateLimiter({
