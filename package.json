@@ -7,7 +7,7 @@
   "main": "server.js",
   "scripts": {
     "build": "npx tsc",
-    "start": "node builds/server.js",
+    "start": "node build/server.js",
     "dev": "concurrently \"npx tsc --watch\" \"node server.js -e html,js,css\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

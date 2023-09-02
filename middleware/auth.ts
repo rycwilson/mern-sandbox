@@ -1,9 +1,10 @@
+import { Request, Response, NextFunction } from 'express';
 import User from '../models/user.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { UnauthenticatedError } from '../errors/index.js';
 
-const auth = (req, res, next) => {
+const auth = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     throw new UnauthenticatedError('Invalid Authorization header');

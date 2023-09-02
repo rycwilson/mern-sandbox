@@ -1,6 +1,7 @@
+import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
-const errorHandler = (err, req, res, next) => {
+const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
   const customError = {
     statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
     msg: err.message || 'Sorry, there was an error'

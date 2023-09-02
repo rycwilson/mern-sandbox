@@ -1,8 +1,9 @@
+import { Request, Response } from 'express';
 import User from '../models/user.js';
 import { StatusCodes } from 'http-status-codes';
 import { BadRequestError, UnauthenticatedError } from '../errors/index.js';
 
-const register = async (req, res) => {
+const register = async (req: Request, res: Response) => {
   console.log(req.body)
   // mongoose will validate
   // const { name, email, password } = req.body
@@ -14,7 +15,7 @@ const register = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token: user.createJWT() });
 };
 
-const login = async (req, res) => {
+const login = async (req: Request, res: Response) => {
   console.log(req.headers);
   const { email, password } = req.body;
   if (!email || !password) throw new BadRequestError('Email and password are required');
