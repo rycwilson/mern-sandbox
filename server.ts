@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import 'express-async-errors';
 
 // database
-import connectDb from './config/db';
+import connectDb from './config/db.js';
 
 // security packages
 import helmet from 'helmet';
