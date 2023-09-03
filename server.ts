@@ -1,5 +1,4 @@
 import express, { Express, Request, Response } from 'express';
-// import dotenv from 'dotenv';
 import 'express-async-errors';
 
 // configuration
@@ -16,14 +15,12 @@ import authRouter from './routes/auth.js';
 import widgetsRouter from './routes/widgets.js';
 
 // middleware
-import authenticatedUser from './middleware/auth.js';
-import notFound from './middleware/not-found.js';
-import errorHandler from './middleware/error-handler.js';
+import authenticateUser from './middleware/auth.js';
+import handleNotFound from './middleware/not-found.js';
+import handleErrors from './middleware/error-handler.js';
 
 const appName = 'node-api';
 const app: Express = express();
-
-// dotenv.config();
 
 app
   .get('/', (req: Request, res: Response) => res.send('node api'))   // just a sanity check
@@ -38,9 +35,9 @@ app
   .use(helmet())
   .use(cors())
   .use('/api/v1/auth', authRouter)
-  .use('/api/v1/widgets', authenticatedUser, widgetsRouter)
-  .use(notFound)
-  .use(errorHandler);
+  .use('/api/v1/widgets', authenticateUser, widgetsRouter)
+  .use(handleNotFound)
+  .use(handleErrors);
 
 connectDb(`${config.MONGO_URI}/${appName}`)
   .then(start)
