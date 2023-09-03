@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { CustomApiError } from '../errors/index.js';
 
 const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
-  const customError = {
+  const customError = (err instanceof CustomApiError) && {
     statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
     msg: err.message || 'Sorry, there was an error'
   }
