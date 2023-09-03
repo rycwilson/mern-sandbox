@@ -12,7 +12,7 @@ const register = async (req: Request, res: Response) => {
   // }
 
   const user = await User.create(req.body);
-  res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token: user.createJWT() });
+  res.status(StatusCodes.CREATED).json({ user: { name: user.fullName }, token: user.createJWT() });
 };
 
 const login = async (req: Request, res: Response) => {
@@ -23,7 +23,7 @@ const login = async (req: Request, res: Response) => {
   if (!user) throw new UnauthenticatedError('Invalid credentials');
   const passwordIsCorrect = await user.comparePassword(password);
   if (passwordIsCorrect) {
-    return res.status(StatusCodes.OK).json({ user: { name: user.name }, token: user.createJWT() });
+    return res.status(StatusCodes.OK).json({ user: { name: user.fullName }, token: user.createJWT() });
   } else {
     throw new UnauthenticatedError('Invalid credentials');
   }
