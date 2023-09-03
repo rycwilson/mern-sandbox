@@ -1,7 +1,6 @@
+import config from '../config/config.js';
 import { Request, Response, NextFunction } from 'express';
-import User from '../models/user.js';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { UnauthenticatedError } from '../errors/index.js';
 
 const auth = (req: Request, res: Response, next: NextFunction) => {
@@ -11,10 +10,10 @@ const auth = (req: Request, res: Response, next: NextFunction) => {
   }
   const token = authHeader.split(' ')[1];
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    const payload = jwt.verify(token, config.JWT_SECRET) as JwtPayload;
     //const user = User.findById(payload.userId).select('-password')
     //req.user = user
-    req.user = { userId: payload.userId, name: payload.name };
+    req.user = { id: payload.id, name: payload.name };
     next();
   } catch (e) {
     throw new UnauthenticatedError('Not authorized');
