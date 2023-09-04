@@ -1,6 +1,6 @@
 import config from '../config/config.js';
-import { Request, Response, NextFunction } from 'express';
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import type { Request, Response, NextFunction } from 'express';
+import jwt, { type JwtPayload } from 'jsonwebtoken';
 import { UnauthenticatedError } from '../errors/index.js';
 
 const auth = (req: Request, res: Response, next: NextFunction) => {
