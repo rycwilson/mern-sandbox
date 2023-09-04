@@ -5,6 +5,8 @@ import { Request } from 'express';
 type RegisteredUser = { id: string, name: string }
 
 declare global {
+  // interface Window { MyNamespace: any }
+  // window.MyNamespace = window.MyNamespace || {}
   namespace NodeJS {
     interface ProcessEnv {
       PORT: string,
