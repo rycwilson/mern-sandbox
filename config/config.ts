@@ -3,8 +3,13 @@
 import path from 'path';
 import dotenv from 'dotenv';
 
+// https://blog.logrocket.com/alternatives-dirname-node-js-es-modules/
+import * as url from 'url';
+// const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
 // Parsing the env file.
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 // Interface to load env variables
 // Note these variables can possibly be undefined
@@ -26,7 +31,7 @@ interface Config {
 // Loading process.env as ENV interface
 const getConfig = (): ENV => {
   return {
-    PORT: process.env.PORT ? Number(process.env.PORT) : undefined,
+    PORT: process.env.PORT ? +process.env.PORT : undefined,
     MONGO_URI: process.env.MONGO_URI,
     JWT_SECRET: process.env.JWT_SECRET,
     JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN
