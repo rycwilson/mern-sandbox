@@ -1,6 +1,12 @@
-import mongoose from 'mongoose'
+import { Schema, type SchemaDefinition, Types, model } from 'mongoose';
 
-const widgetAttributes = {
+interface IWidget {
+  name: string,
+  category: string,
+  createdBy: Types.ObjectId
+}
+
+const widgetAttributes: SchemaDefinition = {
   name: {
     type: String,
     required: [true, 'Widget name is required'],
@@ -12,12 +18,12 @@ const widgetAttributes = {
     default: 'a'
   },
   createdBy: {
-    type: mongoose.Types.ObjectId,
+    type: Types.ObjectId,
     ref: 'User',
     required: [true, 'User is required']
   }
-}
+};
 const options = { timestamps: true };
-const widgetSchema = new mongoose.Schema(widgetAttributes, options)
+const widgetSchema = new Schema<IWidget>(widgetAttributes, options);
 
-export default mongoose.model('Widget', widgetSchema)
+export default model('Widget', widgetSchema);
