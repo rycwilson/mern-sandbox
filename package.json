@@ -8,7 +8,7 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node build/server.js",
-    "dev": "concurrently \"npx tsc --watch\" \"node server.js -e html,js,css\"",
+    "dev": "concurrently \"npx tsc --watch\" \"node build/server.js -e html,js,css\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ryan Wilson",
