@@ -1,5 +1,5 @@
 class CustomApiError extends Error {
-  statusCode: number | undefined;
+  statusCode: number | undefined = undefined;
 
   constructor(message: string) {
     super(message);
