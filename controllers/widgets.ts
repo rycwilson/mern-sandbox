@@ -1,4 +1,4 @@
-import type { Request, Response } from 'express';
+import type { Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import Widget from '../models/widget.js';
 import { BadRequestError, NotFoundError } from '../errors/index.js';
