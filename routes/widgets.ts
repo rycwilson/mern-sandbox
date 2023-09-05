@@ -1,18 +1,18 @@
 import type { RequestHandler } from 'express';
-import express from 'express';
-import { getAllWidgets, createWidget, getWidget, updateWidget, deleteWidget } from '../controllers/widgets.js';
+import { Router } from 'express';
+import { index, show, create, update, destroy } from '../controllers/widgets.js';
 
-const router = express.Router()
+const router = Router();
 
 // RequestHandler assertion is necessary due to argument being AuthenticatedRequest instead of Request
 // TODO: probably a better way to do this
 router.route('/')
-  .get(getAllWidgets as RequestHandler)
-  .post(createWidget as RequestHandler);
+  .get(index as RequestHandler)
+  .post(create as RequestHandler);
   
 router.route('/:id')
-  .get(getWidget as RequestHandler)
-  .put(updateWidget as RequestHandler)
-  .delete(deleteWidget as RequestHandler);
+  .get(show as RequestHandler)
+  .put(update as RequestHandler)
+  .delete(destroy as RequestHandler);
 
 export default router;

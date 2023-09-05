@@ -3,8 +3,7 @@ import User from '../models/user.js';
 import { StatusCodes } from 'http-status-codes';
 import { BadRequestError, UnauthenticatedError } from '../errors/index.js';
 
-const register = async (req: Request, res: Response) => {
-  console.log(req.body)
+export async function register(req: Request, res: Response) {
   // mongoose will validate
   // const { name, email, password } = req.body
   // if (!name || !email || !password) {
@@ -15,8 +14,7 @@ const register = async (req: Request, res: Response) => {
   res.status(StatusCodes.CREATED).json({ user: { name: user.fullName }, token: user.createJWT() });
 };
 
-const login = async (req: Request, res: Response) => {
-  console.log(req.headers);
+export async function login(req: Request, res: Response) {
   const { email, password } = req.body;
   if (!email || !password) throw new BadRequestError('Email and password are required');
   const user = await User.findOne({ email });
@@ -28,5 +26,3 @@ const login = async (req: Request, res: Response) => {
     throw new UnauthenticatedError('Invalid credentials');
   }
 };
-
-export { register, login };

@@ -1,6 +1,6 @@
 import { Schema, type SchemaDefinition, Types, model } from 'mongoose';
 
-interface IWidget {
+interface Widget {
   name: string,
   category: string,
   createdBy: Types.ObjectId
@@ -24,6 +24,6 @@ const widgetAttributes: SchemaDefinition = {
   }
 };
 const options = { timestamps: true };
-const widgetSchema = new Schema<IWidget>(widgetAttributes, options);
+const widgetSchema = new Schema<Widget>(widgetAttributes, options);
 
 export default model('Widget', widgetSchema);

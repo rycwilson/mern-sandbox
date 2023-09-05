@@ -1,4 +1,4 @@
-import type { Express, Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import express from 'express';
 import 'express-async-errors';
 
@@ -18,10 +18,10 @@ import widgetsRouter from './routes/widgets.js';
 // middleware
 import authenticateUser from './middleware/auth.js';
 import handleNotFound from './middleware/not-found.js';
-import handleErrors from './middleware/error-handler.js';
+import handleError from './middleware/error-handler.js';
 
 const appName = 'node-api';
-const app: Express = express();
+const app = express();
 
 app
   .get('/', (req: Request, res: Response) => res.send('node api'))   // just a sanity check
@@ -38,7 +38,7 @@ app
   .use('/api/v1/auth', authRouter)
   .use('/api/v1/widgets', authenticateUser, widgetsRouter)
   .use(handleNotFound)
-  .use(handleErrors);
+  .use(handleError);
 
 connectDb(`${config.MONGO_URI}/${appName}`)
   .then(start)

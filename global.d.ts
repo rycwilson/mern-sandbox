@@ -1,4 +1,5 @@
 // https://dev.to/asjadanis/parsing-env-with-typescript-3jjm
+// https://stackoverflow.com/questions/45194598/using-process-env-in-typescript
 
 import { Request } from 'express';
 
@@ -16,6 +17,7 @@ declare global {
     }
   }
 
+  // https://blog.logrocket.com/extend-express-request-object-typescript/
   namespace Express {
     interface Request { 
       user?: RegisteredUser 

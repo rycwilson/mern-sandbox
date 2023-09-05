@@ -2,7 +2,7 @@ import { Schema, type SchemaDefinition, model } from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-interface IUser {
+interface User {
   firstName: string,
   lastName?: string,
   email: string,
@@ -44,9 +44,9 @@ const userAttributes: SchemaDefinition = {
   // }
 };
 const options = { timestamps: true };
-const userSchema = new Schema<IUser>(userAttributes, options);
+const userSchema = new Schema<User>(userAttributes, options);
 
-userSchema.virtual('fullName').get(function (this: IUser) { return `${this.firstName} ${this.lastName}`.trim(); });
+userSchema.virtual('fullName').get(function (this: User) { return `${this.firstName} ${this.lastName}`.trim(); });
 
 userSchema.pre('save', async function () {
   const salt = await bcrypt.genSalt(10);
@@ -66,4 +66,4 @@ userSchema.methods.comparePassword = async function (candidatePass: string) {
   return isMatch;
 }
 
-export default model<IUser>('User', userSchema);
+export default model<User>('User', userSchema);
