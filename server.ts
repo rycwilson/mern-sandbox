@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 import express from 'express';
-import 'express-async-errors';
+// import 'express-async-errors';
 
 // configuration
 import config from './config/config.js';
