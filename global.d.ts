@@ -1,11 +1,13 @@
 // https://dev.to/asjadanis/parsing-env-with-typescript-3jjm
 // https://stackoverflow.com/questions/45194598/using-process-env-in-typescript
 
-import { Request } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 
 type RegisteredUser = { id: string, name: string }
 
 declare global {
+  
+
   // interface Window { MyNamespace: any }
   // window.MyNamespace = window.MyNamespace || {}
   namespace NodeJS {
@@ -22,6 +24,10 @@ declare global {
     interface Request { 
       user?: RegisteredUser 
     }
+  }
+
+  interface AsyncRequestHandler<T extends Request = Request> {
+    (req: T, res: Response, next: NextFunction): Promise<any>;
   }
 
   interface AuthenticatedRequest extends Request {

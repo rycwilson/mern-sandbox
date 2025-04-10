@@ -1,11 +1,9 @@
-import type { Request, Response, NextFunction, RequestHandler } from 'express';
+import type { Request, RequestHandler } from 'express';
 
-type AsyncRequestHandler<T = Request> = (req: T, res: Response, next: NextFunction) => Promise<any>;
-
-export function asyncWrapper<T = Request>(fn: AsyncRequestHandler<T>) {
-  return async (req: T, res: Response, next: NextFunction) => {
+export function asyncWrapper<T extends Request = Request>(handler: AsyncRequestHandler<T>): RequestHandler {
+  return async (req, res, next) => {
     try {
-      await fn(req, res, next);
+      await handler(req as T, res, next);
     } catch (err) {
       next(err);
     } 
