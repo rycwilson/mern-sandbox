@@ -9,7 +9,7 @@ interface User {
   password: string,
   fullName: string,
   createJWT: () => string,
-  comparePassword: (candidatePass: string) => boolean
+  comparePassword: (candidatePass: string) => Promise<boolean>
 }
 
 const userAttributes: SchemaDefinition = {
