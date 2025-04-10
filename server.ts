@@ -1,6 +1,5 @@
 import type { Request, Response } from 'express';
 import express from 'express';
-// import 'express-async-errors';
 
 // configuration
 import config from './config/config.js';
@@ -24,7 +23,7 @@ const appName = 'node-api';
 const app = express();
 
 app
-  .get('/', (req: Request, res: Response) => res.send('node api'))   // just a sanity check
+  .get('/', (req: Request, res: Response) => res.send('here is the node api'))   // just a sanity check
   .set('trust proxy', 1)  // (for heroku deploy) https://www.npmjs.com/package/express-rate-limit#user-content-troubleshooting-proxy-issues
   .use(
     rateLimiter({
