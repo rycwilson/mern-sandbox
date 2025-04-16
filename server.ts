@@ -1,8 +1,8 @@
 import express from 'express';
 
 // configuration
-import config from './config/config.js';
-import connectDb from './config/db.js';
+import config from './config/config.ts';
+import connectDb from './config/db.ts';
 
 // security packages
 import helmet from 'helmet';
@@ -10,13 +10,13 @@ import cors from 'cors';
 import rateLimiter from 'express-rate-limit';
 
 // routes
-import authRouter from './routes/auth.js';
-import widgetsRouter from './routes/widgets.js';
+import authRouter from './routes/auth.ts';
+import widgetsRouter from './routes/widgets.ts';
 
 // middleware
-import authenticateUser from './middleware/auth.js';
-import handleNotFound from './middleware/not-found.js';
-import handleError from './middleware/error-handler.js';
+import authenticateUser from './middleware/auth.ts';
+import handleNotFound from './middleware/not-found.ts';
+import handleError from './middleware/error-handler.ts';
 
 const appName = 'node-api';
 const app = express();

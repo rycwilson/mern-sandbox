@@ -2,7 +2,7 @@ import type { Request, Response, NextFunction } from 'express';
 import { Error as MongooseError } from 'mongoose';
 import { MongoError } from 'mongodb';
 import { StatusCodes } from 'http-status-codes';
-import { CustomApiError } from '../errors/index.js';
+import { CustomApiError } from '../errors/index.ts';
 
 type ErrorType = Error | MongooseError | MongoError | CustomApiError;
 

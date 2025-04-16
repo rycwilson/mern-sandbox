@@ -1,7 +1,7 @@
 import { type Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import Widget from '../models/widget.js';
-import { BadRequestError, NotFoundError } from '../errors/index.js';
+import Widget from '../models/widget.ts';
+import { BadRequestError, NotFoundError } from '../errors/index.ts';
 
 export async function index(req: AuthenticatedRequest, res: Response) {
   const widgets = await Widget.find({ createdBy: req.user.id }).sort('createdAt');

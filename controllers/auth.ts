@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
-import User from '../models/user.js';
+import User from '../models/user.ts';
 import { StatusCodes } from 'http-status-codes';
-import { BadRequestError, UnauthenticatedError } from '../errors/index.js';
+import { BadRequestError, UnauthenticatedError } from '../errors/index.ts';
 
 export async function register(req: Request, res: Response) {
   // mongoose will validate

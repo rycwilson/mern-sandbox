@@ -8,7 +8,10 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node build/server.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon build/server.js --ext html,js,css\"",
+    "dev_old": "concurrently \"npx tsc --watch\" \"nodemon build/server.js --ext html,js,css\"",
+
+    "_comment": "Use `--exec node` else nodemon will attempt to use ts-node (which isn't installed) to compile typescript files",
+    "dev": "nodemon --exec node server.ts --ext html,ts,css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ryan Wilson",

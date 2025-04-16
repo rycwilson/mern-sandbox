@@ -1,7 +1,7 @@
-import config from '../config/config.js';
+import config from '../config/config.ts';
 import type { Request, Response, NextFunction } from 'express';
-import { verify, type JwtPayload } from 'jsonwebtoken';
-import { UnauthenticatedError } from '../errors/index.js';
+import jwt, { type JwtPayload } from 'jsonwebtoken';
+import { UnauthenticatedError } from '../errors/index.ts';
 
 export default function(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
@@ -10,7 +10,7 @@ export default function(req: Request, res: Response, next: NextFunction) {
   }
   const token = authHeader.split(' ')[1];
   try {
-    const jwtPayload = verify(token, config.JWT_SECRET);
+    const jwtPayload = jwt.verify(token, config.JWT_SECRET);
     
     // Narrow the type of payload (depending on how jwt.sign was called, jwt.verify may return an object or primitive)
     if (typeof jwtPayload !== 'object' || jwtPayload === null) {

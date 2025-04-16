@@ -1,6 +1,6 @@
-import CustomApiError from './custom-error.js';
-import BadRequestError from './bad-request.js';
-import NotFoundError from './not-found.js';
-import UnauthenticatedError from './unauthenticated.js';
+import CustomApiError from './custom-error.ts';
+import BadRequestError from './bad-request.ts';
+import NotFoundError from './not-found.ts';
+import UnauthenticatedError from './unauthenticated.ts';
 
 export { CustomApiError, BadRequestError, NotFoundError, UnauthenticatedError };

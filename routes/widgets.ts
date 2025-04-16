@@ -1,7 +1,7 @@
-import { asyncWrapper } from '../middleware/async.js';
+import { asyncWrapper } from '../middleware/async.ts';
 import { Router } from 'express';
-import { index, show, create, update, destroy } from '../controllers/widgets.js';
-import { logCreatedWidget } from '../middleware/misc.js';
+import { index, show, create, update, destroy } from '../controllers/widgets.ts';
+import { logCreatedWidget } from '../middleware/misc.ts';
 
 const router = Router();
 
