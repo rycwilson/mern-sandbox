@@ -1,15 +1,18 @@
-FROM node:lts-alpine
-ARG NODE_ENV=production
-ENV NODE_ENV=$NODE_ENV
-WORKDIR /app
+FROM node:23-slim AS base
+ENV NODE_ENV=production
+WORKDIR /usr/src/app
 COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
-RUN if [ "$NODE_ENV" = "production" ]; then \
-      npm install --production --silent; \
-    else \
-      npm install && mv node_modules ../; \
-    fi
+
+FROM base AS development
+RUN npm install && mv node_modules ../
 COPY . .
 EXPOSE 8000
-RUN chown -R node /app
+CMD ["npm", "run", "dev"]
+
+FROM base AS production
+RUN npm install --production --silent
+COPY . .
+EXPOSE 8000
+RUN chown -R node /usr/src/app
 USER node
-CMD ["/bin/sh", "-c", "if [ \"$NODE_ENV\" = \"production\" ]; then npm start; else npm run dev; fi"]
+CMD ["npm", "start"]
