@@ -9,7 +9,6 @@
     "build": "npx tsc",
     "start": "node build/server.js",
     "dev_old": "concurrently \"npx tsc --watch\" \"nodemon build/server.js --ext html,js,css\"",
-
     "_comment": "Use `--exec node` else nodemon will attempt to use ts-node (which isn't installed) to compile typescript files",
     "dev": "nodemon --exec node server.ts --ext html,ts,css",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,7 +18,6 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
     "express": "^5.1.0",
     "express-rate-limit": "^6.9.0",
     "helmet": "^7.0.0",

@@ -1,7 +1,7 @@
 // https://dev.to/asjadanis/parsing-env-with-typescript-3jjm
 
 import path from 'path';
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 
 // https://blog.logrocket.com/alternatives-dirname-node-js-es-modules/
 import * as url from 'url';
@@ -9,7 +9,7 @@ import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 // Parsing the env file.
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+// dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 // Interface to load env variables
 // Note these variables can possibly be undefined
