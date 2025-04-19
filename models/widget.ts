@@ -1,4 +1,5 @@
 import { Schema, type SchemaDefinition, Types, model } from 'mongoose';
+import { WIDGET_CATEGORY } from '../utils/constants.ts';
 
 interface Widget {
   name: string,
@@ -14,8 +15,8 @@ const widgetAttributes: SchemaDefinition = {
   },
   category: {
     type: String,
-    enum: ['a', 'b', 'c'],
-    default: 'a'
+    enum: Object.values(WIDGET_CATEGORY),
+    default: WIDGET_CATEGORY.A,
   },
   createdBy: {
     type: Types.ObjectId,
