@@ -23,7 +23,9 @@ const widgetAttributes: SchemaDefinition = {
     required: [true, 'User is required']
   }
 };
+
 const options = { timestamps: true };
+
 const widgetSchema = new Schema<Widget>(widgetAttributes, options);
 
 export default model('Widget', widgetSchema);

@@ -1,7 +1,7 @@
 import config from '../config/config.ts';
 import type { Request, Response, NextFunction } from 'express';
 import jwt, { type JwtPayload } from 'jsonwebtoken';
-import { UnauthenticatedError } from '../errors/index.ts';
+import { UnauthenticatedError } from '../errors/custom-errors.ts';
 
 export default function(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;

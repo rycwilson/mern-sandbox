@@ -1,16 +1,16 @@
-import type { Request, Response, NextFunction } from 'express';
+import { type ErrorRequestHandler } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import { Error as MongooseError } from 'mongoose';
 import { MongoError } from 'mongodb';
-import { StatusCodes } from 'http-status-codes';
-import { CustomApiError } from '../errors/index.ts';
+import { CustomApiError } from '../errors/custom-errors.ts';
 
 type ErrorType = Error | MongooseError | MongoError | CustomApiError;
 
-export default function handleError(err: ErrorType, req: Request, res: Response, next: NextFunction) {
+const handleError: ErrorRequestHandler = (err: ErrorType, req, res, next) => {
   const customError = {
     statusCode: (err instanceof CustomApiError && err.statusCode) || StatusCodes.INTERNAL_SERVER_ERROR,
     msg: (err instanceof CustomApiError && err.message) || 'Sorry, there was an error'
-  }
+  };
   if (err instanceof MongooseError.ValidationError) {
     customError.msg = Object.values(err.errors).map(item => item.message).join(', ');
     customError.statusCode = 400;
@@ -27,3 +27,5 @@ export default function handleError(err: ErrorType, req: Request, res: Response,
   }
   res.status(customError.statusCode).json({ msg: customError.msg });
 }
+
+export default handleError;
