@@ -1,7 +1,7 @@
 export const WIDGET_CATEGORY = {
-  A: 'a',
-  B: 'b',
-  C: 'c',
+  A: 'A',
+  B: 'B',
+  C: 'C',
 }
 
 export const WIDGET_SORT_BY = {
