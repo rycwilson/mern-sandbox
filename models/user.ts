@@ -1,4 +1,5 @@
 import { Schema, type SchemaDefinition, model } from 'mongoose';
+import config from '../config/config.ts';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -54,21 +55,24 @@ const userSchema = new Schema<User>(userAttributes, options);
 
 userSchema.virtual('fullName').get(function (this: User) { return `${this.firstName} ${this.lastName}`.trim(); });
 
+// note that this middleware will not run when using updateOne or findOneAndUpdate
 userSchema.pre('save', async function () {
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-})
+  if (this.isModified('password')) {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  }
+});
 
 userSchema.methods.createJWT = function () {
   return jwt.sign(
-    { id: this._id, name: this.fullName }, 
-    process.env.JWT_SECRET, 
-    { expiresIn: process.env.JWT_EXPIRES_IN }
+    { id: this._id, role: this.role, name: this.fullName }, 
+    config.JWT_SECRET, 
+    { expiresIn: config.JWT_EXPIRES_IN }
   );
 }
 
-userSchema.methods.comparePassword = async function (candidatePass: string) {
-  const isMatch = await bcrypt.compare(candidatePass, this.password);
+userSchema.methods.comparePassword = async function (candidatePassword: string) {
+  const isMatch = await bcrypt.compare(candidatePassword, this.password);
   return isMatch;
 }
 
