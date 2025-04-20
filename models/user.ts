@@ -63,17 +63,18 @@ userSchema.pre('save', async function () {
   }
 });
 
-userSchema.methods.createJWT = function () {
-  return jwt.sign(
-    { id: this._id, role: this.role, name: this.fullName }, 
-    config.JWT_SECRET, 
-    { expiresIn: config.JWT_EXPIRES_IN }
-  );
-}
-
-userSchema.methods.comparePassword = async function (candidatePassword: string) {
-  const isMatch = await bcrypt.compare(candidatePassword, this.password);
-  return isMatch;
+userSchema.methods = {
+  createJWT() {
+    return jwt.sign(
+      { id: this._id, role: this.role, name: this.fullName }, 
+      config.JWT_SECRET, 
+      { expiresIn: config.JWT_EXPIRES_IN }
+    );
+  },
+  async comparePassword(candidatePassword: string) {
+    const isMatch = await bcrypt.compare(candidatePassword, this.password);
+    return isMatch;
+  }
 }
 
 export default model<User>('User', userSchema);
