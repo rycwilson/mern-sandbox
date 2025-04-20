@@ -86,3 +86,14 @@ export const validateRegistration = validator([
     .isIn(['user', 'admin'])
     .withMessage("Role must be either 'user' or 'admin'")
 ]);
+
+export const validateLogin = validator([
+  body('email')
+    .notEmpty()
+    .withMessage('Email is required')
+    .isEmail()
+    .withMessage('Email must be a valid email address'),
+  body('password')
+    .notEmpty()
+    .withMessage('Password is required')
+]);
