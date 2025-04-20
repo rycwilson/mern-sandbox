@@ -22,6 +22,7 @@ const userAttributes: SchemaDefinition = {
   lastName: {
     type: String,
     maxlength: 50,
+    default: '',
     trim: true
   },
   email: {
@@ -34,9 +35,14 @@ const userAttributes: SchemaDefinition = {
   password: {
     type: String,
     required: [true, 'Password is required'],
-    minlength: 6,
+    minlength: 8,
     trim: true
   },
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user'
+  }
   // company: {
   //   type: Schema.Types.ObjectId,
   //   ref: "Company",
