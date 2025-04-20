@@ -1,20 +1,16 @@
 // https://dev.to/asjadanis/parsing-env-with-typescript-3jjm
 
-import path from 'path';
-// import dotenv from 'dotenv';
+// import path from 'path';
 
 // https://blog.logrocket.com/alternatives-dirname-node-js-es-modules/
-import * as url from 'url';
+// import * as url from 'url';
 // const __filename = url.fileURLToPath(import.meta.url);
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
-
-// Parsing the env file.
-// dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+// const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 // Interface to load env variables
 // Note these variables can possibly be undefined
-// as someone could skip these varibales or not setup a .env file at all
 interface ENV {
+  NODE_ENV: string | undefined,
   PORT: number | undefined,
   MONGO_URI: string | undefined,
   JWT_SECRET: string | undefined,
@@ -22,6 +18,7 @@ interface ENV {
 }
 
 interface Config {
+  NODE_ENV: string,
   PORT: number,
   MONGO_URI: string,
   JWT_SECRET: string,
@@ -31,6 +28,7 @@ interface Config {
 // Loading process.env as ENV interface
 const getConfig = (): ENV => {
   return {
+    NODE_ENV: process.env.NODE_ENV,
     PORT: process.env.PORT ? +process.env.PORT : undefined,
     MONGO_URI: process.env.MONGO_URI,
     JWT_SECRET: process.env.JWT_SECRET,
@@ -43,7 +41,7 @@ const getConfig = (): ENV => {
 // that these fields are accessible. If all is good return
 // it as Config which just removes the undefined from our type 
 // definition.
-const getSanitzedConfig = (config: ENV): Config => {
+const getSanitizedConfig = (config: ENV): Config => {
   for (const [key, value] of Object.entries(config)) {
     if (value === undefined) {
       throw new Error(`Missing key ${key} in config.env`);
@@ -54,6 +52,6 @@ const getSanitzedConfig = (config: ENV): Config => {
 
 const config = getConfig();
 
-const sanitizedConfig = getSanitzedConfig(config);
+const sanitizedConfig = getSanitizedConfig(config);
 
 export default sanitizedConfig;
