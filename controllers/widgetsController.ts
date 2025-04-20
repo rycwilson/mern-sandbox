@@ -11,7 +11,6 @@ export async function index(req: AuthenticatedRequest, res: Response) {
 export async function show(req: AuthenticatedRequest, res: Response) {
   const { user: { id: userId }, params: { id: widgetId } } = req;
   const widget = await Widget.findOne({ _id: widgetId, createdBy: userId }).select('-createdAt -updatedAt');
-  if (!widget) throw new NotFoundError(`No widget with id: ${widgetId}`);
   res.status(StatusCodes.OK).json({ widget });
 };
 
@@ -30,13 +29,11 @@ export async function update(req: AuthenticatedRequest, res: Response) {
     req.body, 
     { new: true, runValidators: true }
   );
-  if (!widget) throw new NotFoundError(`No widget with id: ${widgetId}`);
   res.status(200).json({ widget });
 };
 
 export async function destroy(req: AuthenticatedRequest, res: Response) {
   const { user: { id: userId }, params: { id: widgetId } } = req;
   const widget = await Widget.findOneAndDelete({ _id: widgetId, createdBy: userId });
-  if (!widget) throw new NotFoundError(`No widget with id: ${widgetId}`);
   res.status(200).send();
 };
