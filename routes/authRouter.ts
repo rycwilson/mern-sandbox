@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { asyncWrapper } from '../middleware/async.ts';
-import { validateRegistration, validateLogin } from '../middleware/validation.ts';
+import { validateRegistration, validateLogin } from '../models/user.ts';
 import { register, login, logout } from '../controllers/authController.ts';
 
 const router = Router()

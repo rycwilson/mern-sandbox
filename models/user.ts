@@ -1,9 +1,10 @@
-import { Schema, type SchemaDefinition, model } from 'mongoose';
+import mongoose, { type SchemaDefinition, Schema, model } from 'mongoose';
 import config from '../config/config.ts';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { body } from 'express-validator';
 
-interface User {
+interface UserInterface {
   firstName: string,
   lastName?: string,
   email: string,
@@ -44,16 +45,11 @@ const userAttributes: SchemaDefinition = {
     enum: ['user', 'admin'],
     default: 'user'
   }
-  // company: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: "Company",
-  //   required: true
-  // }
 };
-const options = { timestamps: true };
-const userSchema = new Schema<User>(userAttributes, options);
 
-userSchema.virtual('fullName').get(function (this: User) { return `${this.firstName} ${this.lastName}`.trim(); });
+const userSchema = new Schema<UserInterface>(userAttributes, { timestamps: true });
+
+userSchema.virtual('fullName').get(function (this: UserInterface) { return `${this.firstName} ${this.lastName}`.trim(); });
 
 // note that this middleware will not run when using updateOne or findOneAndUpdate
 userSchema.pre('save', async function () {
@@ -77,4 +73,50 @@ userSchema.methods = {
   }
 }
 
-export default model<User>('User', userSchema);
+// all schema configurations (above) must be defined before creating the model
+const User = model<UserInterface>('User', userSchema);
+
+export const validateRegistration = ([
+  body('firstName')
+    .notEmpty()
+    .withMessage('First name is required')
+    .isLength({ max: 50 })
+    .withMessage('First name must be at most 50 characters long'),
+  body('lastName')
+    .optional()
+    .isLength({ max: 50 })
+    .withMessage('Last name must be at most 50 characters long'),
+  body('email')
+    .notEmpty()
+    .withMessage('Email is required')
+    .isEmail()
+    .withMessage('Email must be a valid email address')
+    .custom(async (value) => {
+      const userExists = await mongoose.models.User.exists({ email: value });
+      if (userExists) {
+        throw new Error('Email is already in use');
+      }
+    }),
+  body('password')
+    .notEmpty()
+    .withMessage('Password is required')
+    .isLength({ min: 8 })
+    .withMessage('Password must be at least 8 characters long'),
+  body('role')
+    .optional()
+    .isIn(['user', 'admin'])
+    .withMessage("Role must be either 'user' or 'admin'")
+]);
+
+export const validateLogin = ([
+  body('email')
+    .notEmpty()
+    .withMessage('Email is required')
+    .isEmail()
+    .withMessage('Email must be a valid email address'),
+  body('password')
+    .notEmpty()
+    .withMessage('Password is required')
+]);
+
+export default User;

@@ -1,7 +1,8 @@
 import { Schema, type SchemaDefinition, Types, model } from 'mongoose';
 import { WIDGET_CATEGORY } from '../utils/constants.ts';
+import { param, body } from 'express-validator';
 
-interface Widget {
+interface WidgetInterface {
   name: string,
   category: string,
   createdBy: Types.ObjectId
@@ -25,8 +26,42 @@ const widgetAttributes: SchemaDefinition = {
   }
 };
 
-const options = { timestamps: true };
+const widgetSchema = new Schema<WidgetInterface>(widgetAttributes, { timestamps: true });
 
-const widgetSchema = new Schema<Widget>(widgetAttributes, options);
+// any schema configurations can be added here, must come before creating the model
 
-export default model('Widget', widgetSchema);
+const Widget = model<WidgetInterface>('Widget', widgetSchema);
+
+export const validateWidgetAccess = ([
+  param('id')
+    .custom(async (value, { req }) => {
+      const widget = await Widget.findById(value);
+      // const widgetExists = await mongoose.models.Widget.exists({ _id: value });
+      if (!widget) {
+        throw new Error(`No widget with id: ${value}`);
+      }
+      const isAdmin = req.user.role === 'admin';
+      const isOwner = req.user.id === widget.createdBy.toString();
+      if (!isAdmin && !isOwner) {
+        throw new Error('Not authorized');
+      }
+      return true;
+    })
+]);
+
+export const validateWidgetInput = ([
+  body('name')
+    .notEmpty()
+    .withMessage('Widget name is required')
+    .isLength({ max: 50 })
+    .withMessage('Widget name must be at most 50 characters long'),
+  body('category')
+    .optional()
+    .isIn(['A', 'B', 'C'])
+    .withMessage('Category must be one of A, B, or C')
+  // body('createdBy')
+  //   .notEmpty()
+  //   .withMessage('User ID is required')
+]);
+
+export default Widget;
