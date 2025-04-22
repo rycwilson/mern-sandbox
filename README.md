@@ -1,4 +1,4 @@
-### MERN w/ TypeScript
+### MERN with TypeScript
 
 A simple CRUD app featuring
 - node native typescript support
