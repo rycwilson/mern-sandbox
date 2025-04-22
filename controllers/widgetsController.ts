@@ -21,7 +21,6 @@ export async function create(req: AuthenticatedRequest, res: Response) {
 
 export async function update(req: AuthenticatedRequest, res: Response) {
   const { user: { id: userId }, body: { company, position }, params: { id: widgetId } } = req;
-  if (!company || !position) throw new BadRequestError('Missing required fields');
 
   // add option overwrite: true if a PUT with missing attributes should remove or reset those attributes
   const widget = await Widget.findOneAndUpdate(
@@ -34,6 +33,6 @@ export async function update(req: AuthenticatedRequest, res: Response) {
 
 export async function destroy(req: AuthenticatedRequest, res: Response) {
   const { user: { id: userId }, params: { id: widgetId } } = req;
-  const widget = await Widget.findOneAndDelete({ _id: widgetId, createdBy: userId });
+  await Widget.findOneAndDelete({ _id: widgetId, createdBy: userId });
   res.status(200).send();
 };
