@@ -7,6 +7,7 @@ import { CustomApiError } from '../errors/custom-errors.ts';
 type ErrorType = Error | MongooseError | MongoError | CustomApiError;
 
 const handleError: ErrorRequestHandler = (err: ErrorType, req, res, next) => {
+  console.error(err);
   const customError = {
     statusCode: (err instanceof CustomApiError && err.statusCode) || StatusCodes.INTERNAL_SERVER_ERROR,
     msg: (err instanceof CustomApiError && err.message) || 'Sorry, there was an error'
