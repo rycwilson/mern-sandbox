@@ -3,7 +3,7 @@
 
 import type { Request, Response, NextFunction } from 'express';
 
-type RegisteredUser = { id: string, name: string }
+type RegisteredUser = { id: string, role: string, name: string }
 
 declare global {
   
