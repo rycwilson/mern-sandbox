@@ -1,3 +1,7 @@
-### Node API w/ TypeScript
+### MERN w/ TypeScript
 
-Just a basic Node API setup with MongoDB and TypeScript. Work-in-progress.
+A simple CRUD app featuring
+- node native typescript support
+- authentication with JSON web tokens
+- a reusable async wrapper for error handling
+- request-level and schema-level validation
