@@ -1,5 +1,5 @@
 import Wrapper from '../assets/wrappers/Landing';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 function Landing() {
   return (
