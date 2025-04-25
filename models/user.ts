@@ -47,7 +47,11 @@ const userAttributes: SchemaDefinition = {
   }
 };
 
-const userSchema = new Schema<UserInterface>(userAttributes, { timestamps: true });
+const userSchema = new Schema<UserInterface>(userAttributes, { 
+  timestamps: true,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+});
 
 userSchema.virtual('fullName').get(function (this: UserInterface) { return `${this.firstName} ${this.lastName}`.trim(); });
 
@@ -70,7 +74,12 @@ userSchema.methods = {
   async comparePassword(candidatePassword: string) {
     const isMatch = await bcrypt.compare(candidatePassword, this.password);
     return isMatch;
-  }
+  },
+  // toJSON() {
+  //   const userObject = this.toObject();
+  //   delete userObject.password; 
+  //   return userObject;
+  // }
 }
 
 // all schema configurations (above) must be defined before creating the model
@@ -117,6 +126,29 @@ export const validateLogin = ([
   body('password')
     .notEmpty()
     .withMessage('Password is required')
+]);
+
+export const validateUserUpdate = ([
+  body('firstName')
+    .optional()
+    .isLength({ max: 50 })
+    .withMessage('First name must be at most 50 characters long'),
+  body('lastName')
+    .optional()
+    .isLength({ max: 50 })
+    .withMessage('Last name must be at most 50 characters long'),
+  body('email')
+    .optional()
+    .isEmail()
+    .withMessage('Email must be a valid email address')
+    .custom(async (value, { req }) => {  
+      const userExists = await mongoose.models.User.exists({ email: value, _id: { $ne: req.user.id } });
+      if (userExists) {
+        throw new Error('Email is already in use');
+      } else {
+        return true;
+      }
+    })
 ]);
 
 export default User;

@@ -14,11 +14,12 @@ import rateLimiter from 'express-rate-limit';
 
 // routes
 import authRouter from './routes/authRouter.ts';
+import usersRouter from './routes/usersRouter.ts';
 import widgetsRouter from './routes/widgetsRouter.ts';
 
 // middleware
 import cookieParser from 'cookie-parser';
-import authenticateUser from './middleware/auth.ts';
+import { authenticateUser } from './middleware/auth.ts';
 import handleNotFound from './middleware/not-found.ts';
 import handleError from './middleware/error-handler.ts';
 
@@ -40,6 +41,7 @@ app
   .use(helmet())
   .use(cors())
   .use('/api/v1/auth', authRouter)
+  .use('/api/v1/users', authenticateUser, usersRouter)
   .use('/api/v1/widgets', authenticateUser, widgetsRouter)
   .use(handleNotFound)
   .use(handleError);
@@ -47,8 +49,7 @@ app
 try {
   // await connectDb(`${config.MONGO_URI}/${appName}`);
   await connectDb(config.MONGO_URI);
-  const port = config.PORT || 8000;
-  app.listen(port, () => console.log(`${appName} server is listening on port ${port}...`))
+  app.listen(config.PORT, () => console.log(`${appName} server is listening on port ${config.PORT}...`))
 } catch (err) {
   console.error(`Error connecting to database: ${err.message}`);
   process.exit(1);

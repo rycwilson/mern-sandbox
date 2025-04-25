@@ -1,9 +1,9 @@
-import type { Request, Response, NextFunction } from 'express';
+import type { RequestHandler } from 'express';
 import config from '../config/config.ts';
 import jwt, { type JwtPayload } from 'jsonwebtoken';
-import { UnauthenticatedError } from '../errors/custom-errors.ts';
+import { UnauthenticatedError, UnauthorizedError } from '../errors/custom-errors.ts';
 
-export default function(req: Request, res: Response, next: NextFunction) {
+export const authenticateUser: RequestHandler = (req, _, next) => {
   // const authHeader = req.headers.authorization;
   // if (!authHeader || !authHeader.startsWith('Bearer ')) {
     // throw new UnauthenticatedError('Invalid Authorization header');
@@ -30,3 +30,13 @@ export default function(req: Request, res: Response, next: NextFunction) {
     throw new UnauthenticatedError('Invalid credentials');
   }
 }
+
+export const authorizeRoles = (...roles: string[]): RequestHandler => {
+  return (req, _, next) => {
+    if (roles.includes(req.user.role)) {
+      next();
+    } else {
+      throw new UnauthorizedError('Not authorized to access this route');
+    }
+  };
+};
