@@ -10,7 +10,7 @@ interface DashboardContextValue {
   logoutUser: () => Promise<void>;
 }
 
-export const DashboardContext = createContext<DashboardContextValue | undefined>(undefined);
+export const DashboardContext = createContext<DashboardContextValue | null>(null);
 
 function DashboardLayout() {
   const user = { name: 'Ryan '};
