@@ -13,36 +13,37 @@ import {
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <HomeLayout />,
+    Component: HomeLayout,
+    // element: <HomeLayout />,   => use if you need to pass props to the component
     errorElement: <Errors />,
     children: [
       { 
         index: true,
-        element: <Landing />,
+        Component: Landing,
       },
       {
         path: 'register',
-        element: <Register />,
+        Component: Register,
       },
       {
         path: 'login',
-        element: <Login />,
+        Component: Login,
       },
       {
         path: 'dashboard',
-        element: <DashboardLayout />,
+        Component: DashboardLayout,
         children: [
           {
             index: true,
-            element: <AllWidgets />,
+            Component: AllWidgets,
           },
           {
             path: 'add-widget',
-            element: <AddWidget />,
+            Component: AddWidget,
           },
           {
             path: 'profile',
-            element: <Profile />,
+            Component: Profile,
           },
           {
             path: 'admin',
