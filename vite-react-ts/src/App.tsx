@@ -10,6 +10,8 @@ import {
   Profile,
   Errors } from './pages';
 
+import { action as registerAction } from './pages/Register.tsx';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -24,6 +26,7 @@ const router = createBrowserRouter([
       {
         path: 'register',
         Component: Register,
+        action: registerAction
       },
       {
         path: 'login',
