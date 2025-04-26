@@ -1,4 +1,4 @@
-import Wrapper from '../assets/wrappers/Landing';
+import Wrapper from '../assets/wrappers/landing';
 import { Link } from 'react-router';
 
 function Landing() {

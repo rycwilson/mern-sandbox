@@ -1,6 +1,6 @@
 import { useState, createContext } from 'react';
 import { Outlet } from 'react-router';
-import Wrapper from '../assets/wrappers/Dashboard';
+import Wrapper from '../assets/wrappers/dashboard';
 import { BigSidebar, Navbar, SmallSidebar } from '../components';
 
 interface DashboardContextValue {

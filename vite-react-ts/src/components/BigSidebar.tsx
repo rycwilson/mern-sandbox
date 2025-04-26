@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import Wrapper from '../assets/wrappers/BigSidebar';
+import Wrapper from '../assets/wrappers/big-sidebar';
 import NavLinks from './NavLinks';
 import { DashboardContext } from '../pages/DashboardLayout';
 

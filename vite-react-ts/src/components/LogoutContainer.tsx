@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { FaRegCircleUser, FaCaretDown } from 'react-icons/fa6';
-import Wrapper from '../assets/wrappers/LogoutContainer';
+import Wrapper from '../assets/wrappers/logout-container';
 import { useState } from 'react';
 import { DashboardContext } from '../pages/DashboardLayout';
 

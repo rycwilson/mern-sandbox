@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import Wrapper from '../assets/wrappers/SmallSidebar';
+import Wrapper from '../assets/wrappers/small-sideber';
 import { DashboardContext } from '../pages/DashboardLayout';
 import { FaXmark } from 'react-icons/fa6';
 import NavLinks from './NavLinks'; // Assuming you have a NavLinks component for navigation links

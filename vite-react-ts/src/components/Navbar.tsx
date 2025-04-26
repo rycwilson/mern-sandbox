@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import Wrapper from '../assets/wrappers/Navbar';
+import Wrapper from '../assets/wrappers/navbar';
 import { FaAlignJustify } from 'react-icons/fa6';
 import { DashboardContext } from '../pages/DashboardLayout';
 import LogoutContainer from './LogoutContainer'; // Assuming you have a LogoutContainer component
