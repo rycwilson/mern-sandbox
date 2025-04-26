@@ -27,7 +27,12 @@ const appName = 'node-api';
 const app = express();
 
 app
-  .get('/', (_, res) => res.send('herre is the node api'))   // just a sanity check
+  .get('/', (_, res) => res.send('herrre is the node api'))   // just a sanity check
+  
+  .get('/api/v1/test', (req, res) => {
+    res.json({ msg: 'test route' });
+  })
+
   .set('trust proxy', 1)  // (for heroku deploy) https://www.npmjs.com/package/express-rate-limit#user-content-troubleshooting-proxy-issues
   .use(morgan('dev'))     // log requests in dev mode
   .use(
