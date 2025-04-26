@@ -4,18 +4,27 @@ import Wrapper from '../assets/wrappers/register-and-login.ts';
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-  for (const [key, value] of formData.entries()) {
-    console.log(`${key}: ${value}`);
+  const data = Object.fromEntries(formData);
+  try {
+    await fetch('/api/v1/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    return redirect('/login');
+  } catch (error) {
+    return error
   }
-  return formData;
 }
 
-function Register() {
+export default function Register() {
   // const formData = useActionData();
   
   return (
     <Wrapper>
-      <Form method="post" className="form">
+      <Form method="post" className="form" noValidate>
         <h4>Register</h4>
         <FormRow name="firstName" labelText="First Name" required/>
         <FormRow name="lastName" labelText="Last Name" />
@@ -27,5 +36,3 @@ function Register() {
     </Wrapper>
   )
 }
-
-export default Register;
