@@ -9,9 +9,13 @@
 
 // Interface to load env variables
 // Note these variables can possibly be undefined
+
+const defaultPort = 8000;
+const defaultEnvironment = 'development';
+
 interface ENV {
   NODE_ENV: string | undefined,
-  PORT: number | undefined,
+  PORT: number,
   MONGO_URI: string | undefined,
   JWT_SECRET: string | undefined,
   JWT_EXPIRES_IN: string | undefined,
@@ -28,8 +32,8 @@ interface Config {
 // Loading process.env as ENV interface
 const getConfig = (): ENV => {
   return {
-    NODE_ENV: process.env.NODE_ENV,
-    PORT: process.env.PORT ? +process.env.PORT : undefined,
+    NODE_ENV: process.env.NODE_ENV || defaultEnvironment,
+    PORT: process.env.PORT ? +process.env.PORT : defaultPort,
     MONGO_URI: process.env.MONGO_URI,
     JWT_SECRET: process.env.JWT_SECRET,
     JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN
