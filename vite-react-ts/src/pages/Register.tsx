@@ -1,26 +1,30 @@
-import { Link } from 'react-router';
+import { type ActionFunction, Form, redirect, useNavigation, Link, useActionData } from 'react-router';
+import FormRow from '../components/FormRow.tsx';
+import Wrapper from '../assets/wrappers/register-and-login.ts';
+
+export const action: ActionFunction = async ({ request }) => {
+  const formData = await request.formData();
+  for (const [key, value] of formData.entries()) {
+    console.log(`${key}: ${value}`);
+  }
+  return formData;
+}
 
 function Register() {
+  // const formData = useActionData();
+  
   return (
-    <>
-      <h1>Register</h1>
-      <form action="" className="form">
-        <div className="form-row">
-          <label htmlFor="name" className="form-label">
-            Name:{' '}
-            <input 
-              type="text" 
-              id="name" 
-              name="name" 
-              className="form-input" 
-              defaultValue="Ryan" 
-              required/>
-          </label>
-        </div>
-        <button>Register</button>
-      </form>
+    <Wrapper>
+      <Form method="post" className="form">
+        <h4>Register</h4>
+        <FormRow name="firstName" labelText="First Name" required/>
+        <FormRow name="lastName" labelText="Last Name" />
+        <FormRow type="email" name="email" labelText="Email" autoComplete="email" required />
+        <FormRow type="password" name="password" labelText="Password" autoComplete="new-password" required/>
+        <button className="btn btn-block">Register</button>
+      </Form>
       <Link to="/login">Login</Link>
-    </>
+    </Wrapper>
   )
 }
 
