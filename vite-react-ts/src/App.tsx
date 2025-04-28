@@ -10,7 +10,7 @@ import {
   Profile,
   Errors } from './pages';
 
-import { registerAction } from './actions';
+import { registerAction, loginAction } from './actions';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +31,7 @@ const router = createBrowserRouter([
       {
         path: 'login',
         Component: Login,
+        action: loginAction
       },
       {
         path: 'dashboard',
