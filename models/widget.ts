@@ -32,7 +32,19 @@ const widgetSchema = new Schema<WidgetInterface>(widgetAttributes, { timestamps:
 
 const Widget = model<WidgetInterface>('Widget', widgetSchema);
 
-export const validateWidgetAccess = ([
+export const createWidgetValidation = ([
+  body('name')
+    .notEmpty()
+    .withMessage('Widget name is required')
+    .isLength({ max: 50 })
+    .withMessage('Widget name must be at most 50 characters long'),
+  body('category')
+    .optional()
+    .isIn(['A', 'B', 'C'])
+    .withMessage('Category must be one of A, B, or C')
+]);
+
+export const accessWidgetValidation = ([
   param('id')
     .custom(async (value, { req }) => {
       const widget = await Widget.findById(value);
@@ -49,8 +61,9 @@ export const validateWidgetAccess = ([
     })
 ]);
 
-export const validateWidgetInput = ([
+export const updateWidgetValidation = ([
   body('name')
+    .optional()
     .notEmpty()
     .withMessage('Widget name is required')
     .isLength({ max: 50 })
@@ -59,9 +72,6 @@ export const validateWidgetInput = ([
     .optional()
     .isIn(['A', 'B', 'C'])
     .withMessage('Category must be one of A, B, or C')
-  // body('createdBy')
-  //   .notEmpty()
-  //   .withMessage('User ID is required')
 ]);
 
 export default Widget;

@@ -85,7 +85,7 @@ userSchema.methods = {
 // all schema configurations (above) must be defined before creating the model
 const User = model<UserInterface>('User', userSchema);
 
-export const validateRegistration = ([
+export const registrationValidation = ([
   body('firstName')
     .notEmpty()
     .withMessage('First name is required')
@@ -117,7 +117,7 @@ export const validateRegistration = ([
     .withMessage("Role must be either 'user' or 'admin'")
 ]);
 
-export const validateLogin = ([
+export const loginValidation = ([
   body('email')
     .notEmpty()
     .withMessage('Email is required')
@@ -128,7 +128,7 @@ export const validateLogin = ([
     .withMessage('Password is required')
 ]);
 
-export const validateUserUpdate = ([
+export const updateUserValidation = ([
   body('firstName')
     .optional()
     .isLength({ max: 50 })

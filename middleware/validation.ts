@@ -7,7 +7,9 @@ export const validator = (validationChains: ValidationChain[]): [...ValidationCh
   ...validationChains,
   (req, _, next) => {
     const errors = validationResult(req);
-    console.error(errors.array());
+    if (!errors.isEmpty()) {
+      console.error('express-validator errors:', errors.array());
+    }
     if (errors.isEmpty()) {
       return next();
     } else {
@@ -23,7 +25,7 @@ export const validator = (validationChains: ValidationChain[]): [...ValidationCh
   }
 ]);
 
-export const validateIdFormat = validator([
+export const idFormatValidation = ([
   param('id').custom(value => {
     if (mongoose.Types.ObjectId.isValid(value)) {
       return true;
