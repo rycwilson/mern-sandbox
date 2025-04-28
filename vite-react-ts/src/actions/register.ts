@@ -20,6 +20,7 @@ const action: ActionFunction = async ({ request }) => {
     return redirect('/login');
   } catch (error) {
     toast.error(error instanceof Error ? error.message : 'An unexpected error occurred');
+    return error;
   }
 }
 
