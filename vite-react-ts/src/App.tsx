@@ -10,7 +10,7 @@ import {
   Profile,
   Errors } from './pages';
 
-import { action as registerAction } from './pages/Register.tsx';
+import { registerAction } from './actions';
 
 const router = createBrowserRouter([
   {
