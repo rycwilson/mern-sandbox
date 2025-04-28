@@ -11,6 +11,7 @@ import {
   Errors } from './pages';
 
 import { registerAction, loginAction } from './actions';
+import { dashboardLoader } from './loaders';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
       {
         path: 'dashboard',
         Component: DashboardLayout,
+        loader: dashboardLoader,
         children: [
           {
             index: true,

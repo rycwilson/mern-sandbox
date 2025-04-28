@@ -1,4 +1,5 @@
 import { useState, createContext } from 'react';
+import { useLoaderData } from 'react-router';
 import { Outlet } from 'react-router';
 import Wrapper from '../assets/wrappers/dashboard';
 import { BigSidebar, Navbar, SmallSidebar } from '../components';
@@ -13,7 +14,10 @@ interface DashboardContextValue {
 export const DashboardContext = createContext<DashboardContextValue | null>(null);
 
 function DashboardLayout() {
-  const user = { name: 'Ryan '};
+
+  const user = useLoaderData();
+  console.log(user)
+
   const [showSidebar, setShowSidebar] = useState(false);
 
   const toggleSidebar = () => {
