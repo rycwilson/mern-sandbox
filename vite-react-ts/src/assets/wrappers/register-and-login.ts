@@ -22,7 +22,7 @@ const Wrapper = styled.section`
   }
   
   p {
-    margin-top: 1rem;
+    margin: 1.25rem 0;
     text-align: center;
     line-height: 1.5;
   }
