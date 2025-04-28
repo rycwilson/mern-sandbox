@@ -5,7 +5,6 @@ import Widget from '../models/widget.ts';
 
 export async function getCurrentUser(req: Request, res: Response) {
   const user = await User.findOne({ _id: req.user.id }).select('-_id firstName lastName email role');
-  console.log(user)
   res.status(StatusCodes.OK).json({ user });
 }
 
