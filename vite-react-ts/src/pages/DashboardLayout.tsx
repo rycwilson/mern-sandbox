@@ -1,20 +1,12 @@
-import { useState, createContext } from 'react';
+import { useState } from 'react';
 import { useLoaderData, useNavigate } from 'react-router';
 import { Outlet } from 'react-router';
 import Wrapper from '../assets/wrappers/dashboard';
 import { BigSidebar, Navbar, SmallSidebar } from '../components';
+import { DashboardContext } from '../contexts';
 import { toast } from 'react-toastify';
 
-interface DashboardContextValue {
-  user: { firstName: string, lastName: string, email: string, role: string, fullName: string, avatar?: string };
-  showSidebar: boolean;
-  toggleSidebar: () => void;
-  logoutUser: () => Promise<void>;
-}
-
-export const DashboardContext = createContext<DashboardContextValue | null>(null);
-
-function DashboardLayout() {
+export default function DashboardLayout() {
   const user = useLoaderData();
   const navigate = useNavigate();
   const [showSidebar, setShowSidebar] = useState(false);
@@ -46,5 +38,3 @@ function DashboardLayout() {
     </DashboardContext.Provider>
   )
 }
-
-export default DashboardLayout;
