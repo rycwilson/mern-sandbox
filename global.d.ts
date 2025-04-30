@@ -2,12 +2,13 @@
 // https://stackoverflow.com/questions/45194598/using-process-env-in-typescript
 
 import type { Request, Response, NextFunction } from 'express';
+import { type ReactNode } from 'react';
 
 type RegisteredUser = { id: string, role: string, name: string }
 
 declare global {
+  type ModalContent = ReactNode | false | undefined | null;
   
-
   // interface Window { MyNamespace: any }
   // window.MyNamespace = window.MyNamespace || {}
   namespace NodeJS {
