@@ -5,7 +5,7 @@ import {
   Register, 
   Login, 
   DashboardLayout, 
-  AllWidgets,
+  Widgets,
   AddWidget,
   Profile,
   Errors } from './pages';
@@ -41,7 +41,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            Component: AllWidgets,
+            Component: Widgets,
           },
           {
             path: 'add-widget',
