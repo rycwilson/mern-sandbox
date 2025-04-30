@@ -4,7 +4,7 @@ import Wrapper from '../assets/wrappers/logout-container';
 import { useState } from 'react';
 import { DashboardContext } from '../pages/DashboardLayout';
 
-const LogoutContainer = () => {
+export default function LogoutContainer() {
   const [showLogout, setShowLogout] = useState(false);
 
   useEffect(() => {
@@ -14,19 +14,20 @@ const LogoutContainer = () => {
         setShowLogout(false);
       }
     };
-
     if (showLogout) {
       document.body.addEventListener('click', handleOutsideClick);
     }
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
-  }, [showLogout])
+  }, [showLogout]);
 
   const dashboardContext = useContext(DashboardContext);
+  
   if (!dashboardContext) {
     throw new Error('LogoutContainer must be used within a DashboardContext.Provider');
   }
+
   const { user, logoutUser } = dashboardContext;
 
   const handleClick = () => {
@@ -35,18 +36,13 @@ const LogoutContainer = () => {
 
   return (
     <Wrapper>
-      <button
-        type='button'
-        className='btn logout-btn'
-        onClick={handleClick}
-      >
+      <button type='button' className='btn logout-btn' onClick={handleClick}>
         {user.avatar ? (
           <img src={user.avatar} alt='avatar' className='img' />
         ) : (
           <FaRegCircleUser />
         )}
-
-        {user.name}
+        <span>{user.fullName}</span>
         <FaCaretDown />
       </button>
       <div className={`dropdown ${showLogout ? 'show-dropdown' : ''}`}>
@@ -57,5 +53,3 @@ const LogoutContainer = () => {
     </Wrapper>
   );
 };
-
-export default LogoutContainer;
