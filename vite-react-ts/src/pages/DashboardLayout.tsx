@@ -1,11 +1,12 @@
 import { useState, createContext } from 'react';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
 import { Outlet } from 'react-router';
 import Wrapper from '../assets/wrappers/dashboard';
 import { BigSidebar, Navbar, SmallSidebar } from '../components';
+import { toast } from 'react-toastify';
 
 interface DashboardContextValue {
-  user: { name: string, avatar?: string };
+  user: { firstName: string, lastName: string, email: string, role: string, fullName: string, avatar?: string };
   showSidebar: boolean;
   toggleSidebar: () => void;
   logoutUser: () => Promise<void>;
@@ -14,19 +15,18 @@ interface DashboardContextValue {
 export const DashboardContext = createContext<DashboardContextValue | null>(null);
 
 function DashboardLayout() {
-
   const user = useLoaderData();
-  console.log(user)
-
+  const navigate = useNavigate();
   const [showSidebar, setShowSidebar] = useState(false);
 
   const toggleSidebar = () => {
-    console.log('toggling sidebar')
     setShowSidebar(!showSidebar);
   };
 
   const logoutUser = async () => {
-    console.log('logout user')
+    navigate('/');
+    await fetch('/api/v1/auth/logout');
+    toast.success('Logged out successfully');
   }
 
   return (
