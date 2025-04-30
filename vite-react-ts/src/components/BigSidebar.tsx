@@ -1,15 +1,13 @@
 import { useContext } from 'react';
 import Wrapper from '../assets/wrappers/big-sidebar';
 import NavLinks from './NavLinks';
-import { DashboardContext } from '../pages/DashboardLayout';
+import { DashboardContext } from '../contexts';
 
-const BigSidebar = () => {
+export default function BigSidebar() {
   const dashboardContext = useContext(DashboardContext);
-
   if (!dashboardContext) {
     throw new Error('BigSidebar must be used within a DashboardContext.Provider');
   }
-
   const { showSidebar, user } = dashboardContext;
 
   return (
@@ -25,6 +23,4 @@ const BigSidebar = () => {
       </div>
     </Wrapper>
   )
-}
-
-export default BigSidebar
+};

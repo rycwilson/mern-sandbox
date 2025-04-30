@@ -1,14 +1,16 @@
 import { useContext } from 'react';
 import Wrapper from '../assets/wrappers/small-sideber';
-import { DashboardContext } from '../pages/DashboardLayout';
+import { DashboardContext } from '../contexts';
 import { FaXmark } from 'react-icons/fa6';
 import NavLinks from './NavLinks'; // Assuming you have a NavLinks component for navigation links
 
 const SmallSidebar = () => {
   const dashboardContext = useContext(DashboardContext);
+
   if (!dashboardContext) {
     throw new Error('SmallSidebar must be used within a DashboardContext.Provider');
   }
+  
   const { showSidebar, toggleSidebar } = dashboardContext;
 
   return (

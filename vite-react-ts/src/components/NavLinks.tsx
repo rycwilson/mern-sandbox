@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import { NavLink } from 'react-router';
 import links from '../utils/links';
-import { DashboardContext } from '../pages/DashboardLayout';
+import { DashboardContext } from '../contexts';
 
-const NavLinks = ({ isBigSidebar = false }: { isBigSidebar?: boolean }) => {
+export default function NavLinks({ isBigSidebar = false }: { isBigSidebar?: boolean }) {
   const dashboardContext = useContext(DashboardContext);
   if (!dashboardContext) {
     throw new Error('NavLinks must be used within a DashboardContext.Provider');
@@ -29,6 +29,4 @@ const NavLinks = ({ isBigSidebar = false }: { isBigSidebar?: boolean }) => {
       })}  
     </div>
   )
-}
-
-export default NavLinks;
+};

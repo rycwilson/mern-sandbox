@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import { FaRegCircleUser, FaCaretDown } from 'react-icons/fa6';
 import Wrapper from '../assets/wrappers/logout-container';
 import { useState } from 'react';
-import { DashboardContext } from '../pages/DashboardLayout';
+import { DashboardContext } from '../contexts';
 
 export default function LogoutContainer() {
   const [showLogout, setShowLogout] = useState(false);
@@ -23,11 +23,9 @@ export default function LogoutContainer() {
   }, [showLogout]);
 
   const dashboardContext = useContext(DashboardContext);
-  
   if (!dashboardContext) {
     throw new Error('LogoutContainer must be used within a DashboardContext.Provider');
   }
-
   const { user, logoutUser } = dashboardContext;
 
   const handleClick = () => {
