@@ -1,5 +1,5 @@
 import { Form, useNavigation, Link, useActionData } from 'react-router';
-import FormRow from '../components/FormRow.tsx';
+import { FormRow } from '../components';
 import Wrapper from '../assets/wrappers/register-and-login.ts';
 
 export default function Login() {
