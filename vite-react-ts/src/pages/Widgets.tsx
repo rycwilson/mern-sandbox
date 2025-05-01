@@ -1,34 +1,19 @@
-import { useEffect } from 'react';
+import { useContext } from 'react';
+import NewWidget from '../components/NewWidget';
+import { DashboardContext } from '../contexts';
 
 export default function Widgets() {
-  useEffect(() => {
-    const modal = document.getElementById('modal') as HTMLDialogElement;
-    const openModalButton = document.getElementById('openModal') as HTMLButtonElement;
-    const closeModalButton = document.getElementById('closeModal') as HTMLButtonElement;
-
-    openModalButton.addEventListener('click', () => {
-      modal.showModal();
-    });
-
-    closeModalButton.addEventListener('click', () => {
-      modal.close();
-    });
-
-    return () => {
-      openModalButton.removeEventListener('click', () => modal.showModal());
-      closeModalButton.removeEventListener('click', () => modal.close());
-    };
-  }, []);
+  const dashboardContext = useContext(DashboardContext);
+  if (!dashboardContext) {
+    throw new Error('Widgets must be used within a DashboardContext.Provider');
+  }
+  const { toggleModal } = dashboardContext;
   
   return (
     <>
       <h4>Widgets</h4>
-
-      <dialog id="modal">
-        <h1>This is a modal.</h1>
-        <button id="closeModal">Close modal</button>
-      </dialog>
-      <button id="openModal">Show modal</button>
+      <br />
+      <button className="btn" onClick={() => toggleModal({ title: 'New Widget', body: <NewWidget /> })}>New Widget</button>
     </>
   )
 }
