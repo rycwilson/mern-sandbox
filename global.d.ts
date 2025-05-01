@@ -7,7 +7,7 @@ import { type ReactNode } from 'react';
 type RegisteredUser = { id: string, role: string, name: string }
 
 declare global {
-  type ModalContent = ReactNode | false | undefined | null;
+  type ModalContent = { title: string, body: ReactNode } | null;
   
   // interface Window { MyNamespace: any }
   // window.MyNamespace = window.MyNamespace || {}
